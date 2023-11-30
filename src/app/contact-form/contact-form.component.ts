@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Contacto } from '../models/contacto';
 import { AreaDeContacto } from '../models/area-de-contacto';
 import { ContactoService } from '../services/contacto.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css'
 })
@@ -18,7 +19,7 @@ export class ContactFormComponent implements OnInit {
     apellido: [''],
     correo: [''],
     celular: [''],
-    areaDeContacto: [''],
+    areaDeContacto: [0],
     mensaje: ['']
   });
 
@@ -31,7 +32,7 @@ export class ContactFormComponent implements OnInit {
       apellido: [''],
       correo: [''],
       celular: [''],
-      areaDeContacto: [''],
+      areaDeContacto: [0],
       mensaje: ['']
     });
 
@@ -49,9 +50,16 @@ export class ContactFormComponent implements OnInit {
     );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.contactoForm.valid) {
-      console.log(this.contactoForm.value);
+      this.contactoService.enviarContacto(this.contactoForm.value).subscribe(
+        response => {
+          console.log('Formulario enviado con éxito', response);
+        },
+        error => {
+          console.error('Error al enviar el formulario:', error);
+        }
+      );
     }
   }
 }

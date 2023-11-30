@@ -9,7 +9,7 @@ import { AreaDeContacto } from '../models/area-de-contacto';
 })
 export class ContactoService {
 
-  private apiUrl = 'http://localhost:8000/api/contacto'; // Ajusta esto a tu URL de API
+  private apiUrl = 'http://localhost:8000/api/contacto';
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +18,6 @@ export class ContactoService {
   }
 
   getAreasDeContacto(): Observable<AreaDeContacto[]> {
-    return this.http.get<AreaDeContacto[]>(this.apiUrl);
+    return this.http.get<AreaDeContacto[]>('http://localhost:8000/api/areas-de-contacto');
   }
 }
